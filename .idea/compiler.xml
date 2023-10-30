@@ -10,6 +10,7 @@
         </processorPath>
         <module name="kcr.test" />
         <module name="kcr.main" />
+        <module name="kcr.test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17" />
