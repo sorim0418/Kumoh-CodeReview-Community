@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/kcr?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
-    password: hoon@0815!!
+    password: thfla0901@
 
   jpa:
     hibernate:
@@ -26,3 +26,12 @@ logging.level:
           descriptor:
             sql:
               BasicBinder: TRACE
+
+openai:
+  api:
+    token: myapikey
+  url:
+    endpoint: https://api.openai.com/v1/completions
+  model: text-davinci-003
+
+
