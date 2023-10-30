@@ -52,6 +52,7 @@ public class QuestionCommentApiController {
     public void likeCancel(@PathVariable("id") Long id) {
         questionCommentService.cancelLikes(id);
     }
+
     @PostConstruct
     public void init() {
         for(int i = 1; i <= 100; i++) {
