@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GPTMessage {
     private String role;
-    private String content;
+    private String content; //prompt
 }

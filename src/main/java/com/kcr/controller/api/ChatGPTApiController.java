@@ -1,15 +1,16 @@
 package com.kcr.controller.api;
 
+import com.kcr.domain.dto.chatGPT.ChatGptRequest;
 import com.kcr.domain.dto.chatGPT.ChatGptResponse;
 import com.kcr.domain.entity.Question;
 import com.kcr.service.ChatService;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/api/chat-gpt")
@@ -17,23 +18,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ChatGPTApiController {
     private final ChatService chatgptService;
-    /*@PostMapping("")
-    public ChatGptResponse askGPT2(@RequestBody Question question){
-        System.out.println(question);
-        return chatgptService.askQuestion(question);
-    }*/
-    /* public QuestionCommentController(ChatService chatgptService) {
-        this.chatgptService = chatgptService;
-    }*/
-    //게시글 올라오자마자 댓글 자동응답
-    /*@PostMapping("")
-    public String askGPT(Long id, @RequestBody String question){
-        //question = "안녕 gpt! 방탄소년단의 멤버를 알려줘!";
+    private RestTemplate template;
 
-        System.out.println(question);
-        questionCommentService.putQuestion2(id, question);
+   /*@PostMapping("/")
+    public String chat(Model model, @ModelAttribute String prompt){
+       try {
+           model.addAttribute("request",prompt);
+           model.addAttribute("response",chatgptService.chat(prompt));
+       }catch (Exception e){
+           model.addAttribute("response","CHAT GPT API ERROR");
+           log.error("Exception",e);
+       }
+       return "";
+   }*/
 
-        return "";
-        //\n\nAs an AI language model, I don't have feelings, but I'm functioning well. Thank you for asking. How can I assist you today?
-    }*/
+    public ChatGptResponse chat(@RequestParam("prompt") String prompt){
+        ChatGptRequest request = new ChatGptRequest("gpt-3.5-turbo",prompt);
+        return null;
+    }
+
 }
