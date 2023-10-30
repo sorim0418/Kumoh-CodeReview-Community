@@ -1,6 +1,8 @@
 package com.kcr.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,7 +16,6 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @Table(name = "questioncomment")
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 기본 생성자의 접근 제어를 Protected로 설정함으로써 무분별한 객체 생성을 예방함
 @AllArgsConstructor
 public class QuestionComment {
@@ -50,11 +51,9 @@ public class QuestionComment {
         this.writer = writer;
     }
 
-
     // Getters and setters
 
     public void updateQuestionComment(String content) {
         this.content = content;
     }
-
 }
