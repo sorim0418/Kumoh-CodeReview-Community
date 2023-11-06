@@ -1,5 +1,6 @@
 package com.kcr.repository;
 
+import com.kcr.domain.dto.question.QuestionListResponseDTO;
 import com.kcr.domain.entity.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,11 +11,12 @@ import org.springframework.data.repository.query.Param;
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
 
+    //    @Query("select q from Question q join fetch q.questionComments")
     Page<Question> findAll(Pageable pageable);
 
-    Page<Question> findByTitleContaining(String title, Pageable pageable);
+    Page<QuestionListResponseDTO> findByTitleContaining(String title, Pageable pageable);
 
-    Page<Question> findByWriterContaining(String writer, Pageable pageable);
+    Page<QuestionListResponseDTO> findByWriterContaining(String writer, Pageable pageable);
 
     @Modifying
     @Query("update Question q set q.views = q.views + 1 where q.id=:id")
@@ -23,4 +25,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Modifying
     @Query("update Question q set q.likes = q.likes + 1 where q.id=:id")
     void updateLikes(@Param("id")Long id);
+
+
 }

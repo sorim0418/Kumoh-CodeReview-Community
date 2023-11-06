@@ -4,25 +4,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-@Getter
+//GPT 응답 반환
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class ChatGptResponse{
-
+    private String id;
+    private String object;
+    private String model;
+    private LocalDate created;
     private List<Choice> choices;
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class Choice {
-        private int index;
-        private GPTMessage message;
-    }
-
 }
 
 //ChatGptResponseDto

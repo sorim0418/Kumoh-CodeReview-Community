@@ -1,24 +1,20 @@
 package com.kcr.domain.dto.chatGPT;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-@Getter
 @Data
-public class ChatGptRequest{
+@AllArgsConstructor
+@NoArgsConstructor
+public class ChatGptRequest implements Serializable {
     private String model;
-    private List<GPTMessage> messages;
-
-    public ChatGptRequest(String model, String prompt) {
-        this.model = model;
-        this.messages = new ArrayList<>();
-        this.messages.add(new GPTMessage("user",prompt));
-    }
+    private List<Message> messages;
+    private Double temperature;
+    @JsonProperty("max_tokens")
+    private Integer maxTokens;
+    @JsonProperty("top_p")
+    private Double topP;
 }

@@ -2,39 +2,50 @@ package com.kcr.controller.api;
 
 import com.kcr.domain.dto.chatGPT.ChatGptRequest;
 import com.kcr.domain.dto.chatGPT.ChatGptResponse;
+import com.kcr.domain.dto.chatGPT.Message;
+import com.kcr.domain.dto.chatGPT.QuestionRequest;
+import com.kcr.domain.dto.questioncomment.QuestionCommentResponseDTO;
+import com.kcr.domain.entity.ChatGPT;
 import com.kcr.domain.entity.Question;
+import com.kcr.domain.entity.QuestionComment;
+import com.kcr.repository.ChatGPTRepository;
 import com.kcr.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-@RestController
-@RequestMapping("/api/chat-gpt")
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Locale;
+
+@Controller
+@RequestMapping("/chatgpt")
 @Slf4j
 @RequiredArgsConstructor
 public class ChatGPTApiController {
-    private final ChatService chatgptService;
-    private RestTemplate template;
 
-   /*@PostMapping("/")
-    public String chat(Model model, @ModelAttribute String prompt){
-       try {
-           model.addAttribute("request",prompt);
-           model.addAttribute("response",chatgptService.chat(prompt));
-       }catch (Exception e){
-           model.addAttribute("response","CHAT GPT API ERROR");
-           log.error("Exception",e);
-       }
-       return "";
-   }*/
+    private final ChatService chatService;
+    private final ChatGPTRepository chatGPTRepository;
 
-    public ChatGptResponse chat(@RequestParam("prompt") String prompt){
-        ChatGptRequest request = new ChatGptRequest("gpt-3.5-turbo",prompt);
-        return null;
+    @PostMapping("/ask") //localhost:8086/chatgpt/ask
+    public ChatGptResponse sendMessage(@RequestBody QuestionRequest questionRequest) {
+        Message message = new Message(questionRequest.getQuestion());
+        return chatService.askQuestion(questionRequest);
     }
+    // question 아이디 받아와서 그 게시물에 대한 응답 반환
+    /*@GetMapping("/kcr/questioncomment")
+    public ResponseEntity<Page<QuestionCommentResponseDTO>> findAll(@PageableDefault(sort = "likes", direction = Sort.Direction.DESC, size = 6) Pageable pageable) {
+        Page<QuestionComment> questionComments = questionCommentRepository.findAll(pageable);
+        Page<QuestionCommentResponseDTO> response = questionComments.map(QuestionCommentResponseDTO::new);
+        return ResponseEntity.ok(response);
+    }*/
 
 }
