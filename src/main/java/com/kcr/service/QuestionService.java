@@ -1,5 +1,6 @@
 package com.kcr.service;
 
+import com.kcr.domain.dto.question.QuestionListResponseDTO;
 import com.kcr.domain.dto.question.QuestionRequestDTO;
 import com.kcr.domain.dto.question.QuestionResponseDTO;
 import com.kcr.domain.entity.Question;
@@ -41,6 +42,13 @@ public class QuestionService {
         questionRepository.delete(question);
     }
 
+    /* 게시글 전체 조회 */
+    @Transactional
+    public Page<QuestionListResponseDTO> findAll(Pageable pageable) {
+        Page<Question> questionPage = questionRepository.findAll(pageable);
+        return questionPage.map(QuestionListResponseDTO::new);
+    }
+
     /* 게시글 상세 조회 */
     @Transactional
     public QuestionResponseDTO findById(Long id) {
@@ -60,16 +68,16 @@ public class QuestionService {
 
     /* 게시글 제목 검색 */
     @Transactional
-    public Page<Question> searchByTitle(String keyword, Pageable pageable) {
-        Page<Question> questionList = questionRepository.findByTitleContaining(keyword, pageable);
+    public Page<QuestionListResponseDTO> searchByTitle(String keyword, Pageable pageable) {
+        Page<QuestionListResponseDTO> questionList = questionRepository.findByTitleContaining(keyword, pageable);
 
         return questionList;
     }
 
     /* 게시글 작성자 검색 */
     @Transactional
-    public Page<Question> searchByWriter(String keyword, Pageable pageable) {
-        Page<Question> questionList = questionRepository.findByTitleContaining(keyword, pageable);
+    public Page<QuestionListResponseDTO> searchByWriter(String keyword, Pageable pageable) {
+        Page<QuestionListResponseDTO> questionList = questionRepository.findByWriterContaining(keyword, pageable);
 
         return questionList;
     }

@@ -40,10 +40,10 @@ public class QuestionApiController {
 
 
     // 테스트 데이터
-    @PostConstruct
+   /* @PostConstruct
     public void init() {
         for(int i = 1; i <= 100; i++) {
             questionRepository.save(new Question("title" + i, "writer" + i, "content" + i, 100L + i, 100L));
         }
-    }
+    }*/
 }

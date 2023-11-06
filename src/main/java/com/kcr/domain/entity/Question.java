@@ -41,7 +41,7 @@ public class Question extends BaseTimeEntity {
     private Member member;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
-    private List<QuestionComment> questionComments = new ArrayList<>();
+    private List<QuestionComment> questionComments;
 
     @OneToMany(mappedBy = "question")
     private List<Image> images = new ArrayList<>();
@@ -49,7 +49,8 @@ public class Question extends BaseTimeEntity {
     @OneToMany(mappedBy = "question")
     private List<HashTag> hashTags = new ArrayList<>();
 
-
+    @OneToOne(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private ChatGPT chatGPT;
     /* 생성자 */
     public Question(String title, String writer, String content, Long likes, Long views) {
         this.title = title;

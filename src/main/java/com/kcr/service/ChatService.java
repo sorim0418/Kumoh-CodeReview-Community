@@ -1,10 +1,9 @@
 package com.kcr.service;
 
-import com.kcr.domain.dto.chatGPT.ChatGptResponse;
-import com.kcr.domain.dto.chatGPT.ChatGptConfig;
-import com.kcr.domain.dto.chatGPT.Choice;
-import com.kcr.domain.dto.chatGPT.ChatGptRequest;
-import com.kcr.domain.entity.Question;
+import com.kcr.config.ChatGptConfig;
+import com.kcr.domain.dto.chatGPT.*;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -12,41 +11,46 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Slf4j
+@RequiredArgsConstructor
 @Service
 public class ChatService {
+
     private static RestTemplate restTemplate = new RestTemplate();
 
-    public HttpEntity<ChatGptRequest> buildHttpEntity(ChatGptRequest requestDto) {
+    //    Build headers
+    public HttpEntity<ChatGptRequest> buildHttpEntity(ChatGptRequest chatRequest) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(ChatGptConfig.MEDIA_TYPE));
         headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + ChatGptConfig.API_KEY);
-        return new HttpEntity<>(requestDto, headers);
+        return new HttpEntity<>(chatRequest, headers);
     }
 
-    public ChatGptResponse getResponse(HttpEntity<ChatGptRequest> chatGptRequestDtoHttpEntity) {
+    //    Generate response
+    public ChatGptResponse getResponse(HttpEntity<ChatGptRequest> chatRequestHttpEntity) {
         ResponseEntity<ChatGptResponse> responseEntity = restTemplate.postForEntity(
-                ChatGptConfig.URL,
-                chatGptRequestDtoHttpEntity,
+                ChatGptConfig.CHAT_URL,
+                chatRequestHttpEntity,
                 ChatGptResponse.class);
 
-        String gptAnswer = "";
-        gptAnswer= responseEntity.getBody().getPrompt();
-        System.out.println(gptAnswer);
         return responseEntity.getBody();
     }
 
-    public ChatGptResponse askQuestion(Question requestQuestion) {
-        System.out.println("질문은 : = "+requestQuestion);
-       return this.getResponse(
-                this.buildHttpEntity(
-                        new ChatGptRequest(
-                                ChatGptConfig.MODEL,
-                                requestQuestion.getContent(), //게시글 내용
-                                ChatGptConfig.MAX_TOKEN,
-                                ChatGptConfig.TEMPERATURE,
-                                ChatGptConfig.TOP_P
-                        )
-                )
-        );
+    public ChatGptResponse askQuestion(QuestionRequest questionRequest) {
+        List<Message> messages = new ArrayList<>();
+        messages.add(new Message(ChatGptConfig.ROLE, questionRequest.getQuestion()));
+
+        ChatGptRequest chatGptRequest = new ChatGptRequest(
+                ChatGptConfig.CHAT_MODEL,
+                messages,
+                ChatGptConfig.TEMPERATURE,
+                ChatGptConfig.MAX_TOKEN,
+                ChatGptConfig.TOP_P);
+
+        return this.getResponse(this.buildHttpEntity(chatGptRequest));
     }
+
 }

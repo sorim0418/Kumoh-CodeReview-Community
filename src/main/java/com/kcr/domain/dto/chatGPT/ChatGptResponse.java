@@ -1,33 +1,21 @@
 package com.kcr.domain.dto.chatGPT;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
-@Getter
-@NoArgsConstructor
-public class ChatGptResponse implements Serializable {
+//GPT 응답 반환
+@Data
+public class ChatGptResponse{
+    private String id;
+    private String object;
     private String model;
-    private String prompt;
-    @JsonProperty("max_tokens")
-    private Integer maxTokens;
-    private Double temperature;
-    @JsonProperty("top_p")
-    private Double topP;
-
-    @Builder
-    public ChatGptResponse(String model, String prompt,
-                           Integer maxTokens, Double temperature,
-                           Double topP) {
-        this.model = model;
-        this.prompt = prompt;
-        this.maxTokens = maxTokens;
-        this.temperature = temperature;
-        this.topP = topP;
-    }
+    private LocalDate created;
+    private List<Choice> choices;
 }
 
 //ChatGptResponseDto
