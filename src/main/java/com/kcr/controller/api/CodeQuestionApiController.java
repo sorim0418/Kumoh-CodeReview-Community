@@ -40,10 +40,10 @@ public class CodeQuestionApiController {
     }
 
     // 테스트 데이터
-    @PostConstruct
+  /* @PostConstruct
     public void init() {
         for(int i = 1; i <= 100; i++) {
             codeQuestionRepository.save(new CodeQuestion("title" + i, "writer" + i, "content" + i, "codeContent" + i, 100L + i, 100L));
         }
-    }
+    }*/
 }

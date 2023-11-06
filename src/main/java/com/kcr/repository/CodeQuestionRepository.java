@@ -1,5 +1,6 @@
 package com.kcr.repository;
 
+import com.kcr.domain.dto.question.CodeQuestionListResponseDTO;
 import com.kcr.domain.entity.CodeQuestion;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,15 +11,17 @@ import org.springframework.data.repository.query.Param;
 
 public interface CodeQuestionRepository extends JpaRepository<CodeQuestion, Long> {
 
-//    @Query(value = "select q from Question q left join q.member m",
-//            countQuery = "select count(q) from Question q")
     Page<CodeQuestion> findAll(Pageable pageable);
 
+    Page<CodeQuestionListResponseDTO> findByTitleContaining(String title, Pageable pageable);
+
+    Page<CodeQuestionListResponseDTO> findByWriterContaining(String writer, Pageable pageable);
+
     @Modifying
-    @Query("update CodeQuestion q set q.views = q.views + 1 where q.id=:id")
+    @Query("update CodeQuestion cq set cq.views = cq.views + 1 where cq.id=:id")
     void updateViews(@Param("id") Long id);
 
     @Modifying
-    @Query("update CodeQuestion q set q.likes = q.likes + 1 where q.id=:id")
+    @Query("update CodeQuestion cq set cq.likes = cq.likes + 1 where cq.id=:id")
     void updateLikes(@Param("id")Long id);
 }

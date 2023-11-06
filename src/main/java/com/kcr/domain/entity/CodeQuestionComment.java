@@ -1,8 +1,7 @@
 package com.kcr.domain.entity;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jdk.jshell.Snippet;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -15,6 +14,8 @@ import static javax.persistence.FetchType.LAZY;
 @Getter
 @Table(name = "codequestioncomment")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class CodeQuestionComment {
 
     @Id @GeneratedValue
@@ -41,4 +42,15 @@ public class CodeQuestionComment {
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private List<QuestionComment> child = new ArrayList<>();
+    public CodeQuestionComment(String content,Long likes, String writer, CodeQuestion codeQuestion_id){
+        this.content = content;
+        this.likes = likes;
+        this.writer = writer;
+        this.codeQuestion=codeQuestion_id;
+    }
+
+    //댓글수정
+    public void updateCodeQuestionComment(String content) {
+        this.content = content;
+    }
 }
