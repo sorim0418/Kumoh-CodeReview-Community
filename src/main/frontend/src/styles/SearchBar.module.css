@@ -1,0 +1,45 @@
+.searchBar {
+    width: 20vw;
+    height: 5vh;
+
+    margin: 3vh 0;
+    margin-left: 68vw;
+
+    border: var(--qna_board_under_bar_border);
+}
+
+.textField {
+    display: inline-block;
+
+    width: 15vw;
+    height: 5vh;
+    font-size: 17px;
+
+    border: none;
+    border-right: 1px solid black;
+
+    font-family: 'GmarketSansMedium';
+}
+
+.textField::placeholder {
+    text-align: center;
+}
+
+.searchBtn {
+    display: inline-block;
+
+    width: 20%;
+    height: 5vh;
+
+    margin-left: 3%;
+    font-size: 16px;
+
+    border: none;
+
+    background-color: white;
+}
+
+.searchBtn:hover {
+    cursor: pointer;
+    transition: 0.5s;
+}

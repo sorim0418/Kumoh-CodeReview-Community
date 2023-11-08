@@ -1,45 +1,32 @@
 package com.kcr.domain.dto.questioncomment;
 
 import com.kcr.domain.entity.QuestionComment;
-import lombok.*;
-import org.springframework.http.HttpStatus;
+import lombok.Builder;
+import lombok.Getter;
 
-import java.util.List;
-
-@Data
-@Builder
-@NoArgsConstructor
+@Getter
 public class QuestionCommentResponseDTO {
     private Long question_comment_id;
     private String content;
+    private Long is_removed;
     private Long likes;
     private String writer;
-    private Long question_id;
+    private String gptcontent;
 
 
     @Builder
-    public QuestionCommentResponseDTO(Long question_comment_id, String content, Long likes, String writer,Long question_id) {
+    public QuestionCommentResponseDTO(Long question_comment_id, String content, Long is_removed, Long likes, String writer) {
         this.question_comment_id = question_comment_id;
         this.content = content;
+        this.is_removed = is_removed;
         this.likes = likes;
         this.writer = writer;
-        this.question_id= question_id;
     }
-    @Builder
+
     public QuestionCommentResponseDTO(QuestionComment questionComment) {
-        this.question_comment_id=questionComment.getId();
-        this.content=questionComment.getContent();
-        this.likes=questionComment.getLikes();
-        this.writer=questionComment.getWriter();
-        this.question_id=questionComment.getQuestion().getId();
-    }
-    public static QuestionCommentResponseDTO toCommentDTO(QuestionComment questionComment, Long questionId) {
-        QuestionCommentResponseDTO questionCommentResponseDTO = new QuestionCommentResponseDTO();
-        questionCommentResponseDTO.setQuestion_comment_id(questionComment.getId());
-        questionCommentResponseDTO.setContent(questionComment.getContent());
-        questionCommentResponseDTO.setLikes(questionComment.getLikes());
-        questionCommentResponseDTO.setWriter(questionComment.getWriter());
-        questionCommentResponseDTO.setQuestion_id(questionId);
-        return questionCommentResponseDTO;
+        this.question_comment_id = questionComment.getId();
+        this.content = questionComment.getContent();
+        this.likes = questionComment.getLikes();
+        this.writer = questionComment.getWriter();
     }
 }

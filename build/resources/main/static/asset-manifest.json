@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.9da9bdce.css",
+    "main.js": "/static/js/main.699ad98f.js",
+    "static/media/GmarketSansBold.otf": "/static/media/GmarketSansBold.03ceab7804dad3e86672.otf",
+    "static/media/GmarketSansMedium.otf": "/static/media/GmarketSansMedium.3b975ddd58dcbe363ee5.otf",
+    "static/media/GmarketSansLight.otf": "/static/media/GmarketSansLight.5d3bc33796f1cb3705f8.otf",
+    "index.html": "/index.html",
+    "main.9da9bdce.css.map": "/static/css/main.9da9bdce.css.map",
+    "main.699ad98f.js.map": "/static/js/main.699ad98f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9da9bdce.css",
+    "static/js/main.699ad98f.js"
+  ]
+}

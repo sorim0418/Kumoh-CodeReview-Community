@@ -1,0 +1,48 @@
+.commentBox {
+    margin: 1vh 0;
+    padding-left: 1vw;
+    
+    border: none;
+    border-bottom: 1px solid black;
+    
+}
+
+.commentBox2 {
+    margin: 1vh 0;
+    margin-left: 5vw;
+    border: none;
+}
+
+.pTag1 {
+    display: inline;
+    font-family: 'GmarketSansMedium';
+    font-size: 20px;
+}
+
+.pTag2 {
+    display: inline;
+    font-family: 'GmarketSansLight';
+    font-size: 14px;
+    padding-left: 0.3vw;
+}
+
+.pTag3 {
+    font-family: 'GmarketSansMedium';
+    font-size: 22px;
+    padding: 0.7vh 0;
+    padding-left: 0.7vw;
+}
+
+.lenTag {
+    font-family: 'GmarketSansMedium';
+    font-size: 20px;
+    padding-left: 1vw;
+}
+
+.liked {
+    display: inline;
+
+    font-family: 'GmarketSansLight';
+    font-size: 14px;
+    padding-left: 1vw;
+}

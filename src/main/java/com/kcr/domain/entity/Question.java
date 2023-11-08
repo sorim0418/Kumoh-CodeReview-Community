@@ -40,17 +40,16 @@ public class Question extends BaseTimeEntity {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
-    private List<QuestionComment> questionComments;
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private final List<QuestionComment> questionComments = new ArrayList<>();
 
     @OneToMany(mappedBy = "question")
-    private List<Image> images = new ArrayList<>();
+    private final List<Image> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "question")
-    private List<HashTag> hashTags = new ArrayList<>();
+    private final List<HashTag> hashTags = new ArrayList<>();
 
-    @OneToOne(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private ChatGPT chatGPT;
+
     /* 생성자 */
     public Question(String title, String writer, String content, Long likes, Long views) {
         this.title = title;

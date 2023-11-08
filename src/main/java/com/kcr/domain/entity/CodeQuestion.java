@@ -44,13 +44,13 @@ public class CodeQuestion extends BaseTimeEntity {
     private Member member;
 
     @OneToMany(mappedBy = "codeQuestion", cascade = CascadeType.REMOVE)
-    private List<CodeQuestionComment> codeQuestionComments = new ArrayList<>();
+    private final List<CodeQuestionComment> codeQuestionComments = new ArrayList<>();
 
     @OneToMany(mappedBy = "codeQuestion")
-    private List<Image> images = new ArrayList<>();
+    private final List<Image> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "codeQuestion")
-    private List<HashTag> hashTags = new ArrayList<>();
+    private final List<HashTag> hashTags = new ArrayList<>();
 
     /* 생성자 */
     public CodeQuestion(String title, String writer, String content, String codeContent, Long likes, Long views) {

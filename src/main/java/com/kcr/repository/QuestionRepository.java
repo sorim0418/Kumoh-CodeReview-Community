@@ -11,7 +11,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
 
-    //    @Query("select q from Question q join fetch q.questionComments")
     Page<Question> findAll(Pageable pageable);
 
     Page<QuestionListResponseDTO> findByTitleContaining(String title, Pageable pageable);
@@ -25,6 +24,4 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Modifying
     @Query("update Question q set q.likes = q.likes + 1 where q.id=:id")
     void updateLikes(@Param("id")Long id);
-
-
 }

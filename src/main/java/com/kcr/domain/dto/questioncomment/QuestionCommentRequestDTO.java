@@ -1,41 +1,32 @@
 package com.kcr.domain.dto.questioncomment;
 
-import com.kcr.domain.entity.Question;
-import lombok.*;
 import com.kcr.domain.entity.QuestionComment;
-import org.apache.logging.log4j.message.Message;
-
-import java.util.List;
-
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 @Getter
-@Setter
 @NoArgsConstructor
 public class QuestionCommentRequestDTO {
-    private Long id;
     private String content;
     private Long likes;
     private String writer;
-    private Question question;
-    private QuestionComment parentId;
 
     @Builder
     public QuestionCommentRequestDTO(String content,Long likes, String writer) {
         this.content = content;
         this.likes = likes;
         this.writer = writer;
-        List<Message> messages;
     }
 
 
     //댓글 등록할때 들어오는거
     /* DTO -> Entity */
     public QuestionComment toSaveEntity() {
+
         return QuestionComment.builder()
-                .id(id)
                 .content(content)
                 .writer(writer)
                 .likes(0L)
-                .question(question)
                 .build();
     }
 }
