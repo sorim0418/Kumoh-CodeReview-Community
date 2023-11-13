@@ -16,7 +16,7 @@ public class MemberDTO {
     private String loginPw;
     private String nickname;
     private String stuNum;
-    private RoleType roleType = RoleType.ROLE_NOT_PERMITTED;
+    private final RoleType roleType = RoleType.ROLE_NOT_PERMITTED;
     private Long activityScore;
 
     /* 회원 서비스 요청 클래스 */
@@ -44,7 +44,7 @@ public class MemberDTO {
         @Column(unique = true)
         private String stuNum;
 
-        private RoleType roleType = RoleType.ROLE_NOT_PERMITTED;
+        private final RoleType roleType = RoleType.ROLE_NOT_PERMITTED;
         private Long activityScore;
 
         /* DTO -> Entity */
@@ -54,7 +54,6 @@ public class MemberDTO {
                     .loginId(loginId)
                     .loginPw(loginPw)
                     .nickname(nickname)
-                    .roleType(roleType)
                     .activityScore(activityScore)
                     .build();
             return member;

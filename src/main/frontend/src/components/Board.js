@@ -1,23 +1,25 @@
-import React from 'react'
-import styles from '../styles/Board.module.css'
-import QuestionListBox from './QuestionListBox'
-import SortList from './SortList'
-import SearchBar from './SearchBar'
-import Title from './Title'
-import WriteButton from './WriteButton'
+// Board.js
 
-function Board() {
+import React from 'react';
+
+function Board({ questions }) {
     return (
-        <>
-            <Title /> <SortList /> <WriteButton id={2}/>
-
-            <div className={styles.mainBackGround}>
-                <QuestionListBox />
-            </div>
-
-            <SearchBar />
-        </>
-    )
+        <div>
+            <h1>질문 목록</h1>
+            {questions.length > 0 ? (
+                <ul>
+                    {questions.map((question) => (
+                        <li key={question.id}>
+                            <h2>{question.title}</h2>
+                            <p>{question.content}</p>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>질문이 없습니다.</p>
+            )}
+        </div>
+    );
 }
 
-export default Board
+export default Board;

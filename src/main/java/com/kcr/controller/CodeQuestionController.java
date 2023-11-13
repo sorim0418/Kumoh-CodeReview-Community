@@ -2,13 +2,10 @@ package com.kcr.controller;
 
 import com.kcr.domain.dto.codequestion.CodeQuestionRequestDTO;
 import com.kcr.domain.dto.codequestion.CodeQuestionResponseDTO;
-import com.kcr.domain.dto.codequestioncomment.CodeQuestionCommentResponseDTO;
 import com.kcr.domain.dto.question.CodeQuestionListResponseDTO;
 import com.kcr.domain.dto.question.QuestionResponseDTO;
-import com.kcr.domain.dto.questioncomment.QuestionCommentResponseDTO;
 import com.kcr.domain.entity.CodeQuestion;
 import com.kcr.repository.CodeQuestionRepository;
-import com.kcr.service.CodeQuestionCommentService;
 import com.kcr.service.CodeQuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,11 +14,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,7 +24,6 @@ public class CodeQuestionController {
 
     private final CodeQuestionService codeQuestionService;
     private final CodeQuestionRepository codeQuestionRepository;
-    private final CodeQuestionCommentService codeQuestionCommentService;
 
     /* ================ API ================ */
     /* 게시글 등록 */
@@ -95,16 +89,10 @@ public class CodeQuestionController {
 
     /* 게시글 상세 조회 + 조회수 업데이트 */
     @GetMapping("/codequestion/{id}")
-    public ResponseEntity<CodeQuestionResponseDTO> findById(@PathVariable("id") Long id, Model model) {
-        CodeQuestionResponseDTO codeQuestionResponseDTO = codeQuestionService.findById(id);
+    public ResponseEntity<CodeQuestionResponseDTO> findById(@PathVariable("id") Long id) {
+        CodeQuestionResponseDTO responseDTO = codeQuestionService.findById(id);
         codeQuestionService.updateViews(id); // views++
-
-        //댓글조회
-        List<CodeQuestionCommentResponseDTO> codeQuestionCommentDTOList = codeQuestionCommentService.findAll(id);
-        codeQuestionResponseDTO.setCodQuestionComments(codeQuestionCommentDTOList);
-
-        model.addAttribute("codeQuestionCommentList", codeQuestionCommentDTOList);
-        return new ResponseEntity<>(codeQuestionResponseDTO, HttpStatus.OK);
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     /* 좋아요 업데이트 */

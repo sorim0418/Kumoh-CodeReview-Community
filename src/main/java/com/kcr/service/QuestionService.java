@@ -26,10 +26,10 @@ public class QuestionService {
 
     /* 게시글 수정 */
     @Transactional
-    public Long update(Long id, QuestionRequestDTO questionRequestDTO) {
+    public Long update(Long id, QuestionRequestDTO requestDTO) {
         Question question = questionRepository.findById(id)
                 .orElseThrow(IllegalArgumentException::new);
-        question.updateQuestion(questionRequestDTO.getTitle(), questionRequestDTO.getContent());
+        question.updateQuestion(requestDTO.getTitle(), requestDTO.getContent());
         return id;
     }
 
@@ -45,8 +45,8 @@ public class QuestionService {
     /* 게시글 전체 조회 */
     @Transactional
     public Page<QuestionListResponseDTO> findAll(Pageable pageable) {
-        Page<Question> questionPage = questionRepository.findAll(pageable);
-        return questionPage.map(QuestionListResponseDTO::new);
+        Page<Question> page = questionRepository.findAll(pageable);
+        return page.map(QuestionListResponseDTO::new);
     }
 
     /* 게시글 상세 조회 */
@@ -69,17 +69,13 @@ public class QuestionService {
     /* 게시글 제목 검색 */
     @Transactional
     public Page<QuestionListResponseDTO> searchByTitle(String keyword, Pageable pageable) {
-        Page<QuestionListResponseDTO> questionList = questionRepository.findByTitleContaining(keyword, pageable);
-
-        return questionList;
+        return questionRepository.findByTitleContaining(keyword, pageable);
     }
 
     /* 게시글 작성자 검색 */
     @Transactional
     public Page<QuestionListResponseDTO> searchByWriter(String keyword, Pageable pageable) {
-        Page<QuestionListResponseDTO> questionList = questionRepository.findByWriterContaining(keyword, pageable);
-
-        return questionList;
+        return questionRepository.findByWriterContaining(keyword, pageable);
     }
 
     /* 게시글 조회수 업데이트 */

@@ -19,7 +19,7 @@ public class QuestionListResponseDTO {
 
     /* Entity -> DTO */
     @Builder
-    public QuestionListResponseDTO(Long id, String title, String writer, String content, String createDate, Long likes, Long views) {
+    public QuestionListResponseDTO(Long id, String title, String writer, String createDate, Long likes, Long views) {
         this.id = id;
         this.title = title;
         this.writer = writer;
