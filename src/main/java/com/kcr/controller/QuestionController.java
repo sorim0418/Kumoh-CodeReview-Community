@@ -2,19 +2,14 @@ package com.kcr.controller;
 
 import com.kcr.domain.dto.chatGPT.ChatGptResponse;
 import com.kcr.domain.dto.question.QuestionListResponseDTO;
-import com.kcr.domain.dto.question.QuestionRequestDTO;
 import com.kcr.domain.dto.question.QuestionResponseDTO;
 import com.kcr.domain.dto.questioncomment.QuestionCommentResponseDTO;
-import com.kcr.domain.entity.ChatGPT;
-import com.kcr.domain.entity.Question;
-import com.kcr.repository.ChatGPTRepository;
 import com.kcr.repository.QuestionRepository;
 import com.kcr.service.ChatGptService;
 import com.kcr.service.QuestionCommentService;
 import com.kcr.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -40,7 +35,6 @@ public class QuestionController {
     private final QuestionRepository questionRepository;
     private final QuestionCommentService questionCommentService;
     private final ChatGptService chatGptService;
-    private final ChatGPTRepository chatGPTRepository;
 
     /* 게시글 등록 화면 */
 //    @GetMapping("/question/add")
@@ -100,7 +94,4 @@ public class QuestionController {
        // model.addAttribute("question", questionResponseDTO);
         return new ResponseEntity<>(questionResponseDTO, HttpStatus.OK);
     }
-
-
-
 }
