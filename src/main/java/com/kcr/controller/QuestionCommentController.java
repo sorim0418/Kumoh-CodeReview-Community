@@ -20,11 +20,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 public class QuestionCommentController {
-    @Autowired
+   /* @Autowired
     private QuestionCommentService questionCommentService;
 
     //공감순 댓글 조회
-   /* @GetMapping("/kcr/questioncomment")
+   *//* @GetMapping("/kcr/questioncomment")
     public Page<QuestionCommentResponseDTO> findAllByCreateDate(@PageableDefault(sort = "likes", direction = Sort.Direction.DESC, size = 6) Pageable pageable) {
         return questionCommentRepository.findAll(pageable)
                 .map(QuestionCommentResponseDTO::new);
@@ -33,13 +33,13 @@ public class QuestionCommentController {
     public ResponseEntity<Page<QuestionComment>> getCommentsByQuestionId(@PathVariable Long id, @PageableDefault(sort = "likes", direction = Sort.Direction.DESC, size = 6) Pageable pageable) {
         Page<QuestionComment> comments = questionCommentService.getCommentsByQuestionId(id,pageable);
         return ResponseEntity.ok(comments);
-    }*/
+    }*//*
     @GetMapping("/question/{id}/comments")
     public ResponseEntity<List<QuestionCommentResponseDTO>> getCommentsByQuestionId(@PathVariable Long id, @PageableDefault(sort = "likes", direction = Sort.Direction.DESC, size = 6) Pageable pageable) {
         //Page<QuestionComment> comments = questionCommentService.getCommentsByQuestionId(id,pageable);
         List<QuestionCommentResponseDTO> questionCommentDTOList = questionCommentService.findAll(id); //댓글 목록 가져옴
         return ResponseEntity.ok(questionCommentDTOList);
-    }
+    }*/
 
 
 }

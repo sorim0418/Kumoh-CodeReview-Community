@@ -16,18 +16,13 @@ public class QuestionCommentRequestDTO {
     private Long likes;
     private String writer;
     private Question question;
-    private QuestionComment parentId;
-
+    private QuestionComment parentComment;
     @Builder
     public QuestionCommentRequestDTO(String content,Long likes, String writer) {
         this.content = content;
         this.likes = likes;
         this.writer = writer;
-        List<Message> messages;
     }
-
-
-    //댓글 등록할때 들어오는거
     /* DTO -> Entity */
     public QuestionComment toSaveEntity() {
         return QuestionComment.builder()

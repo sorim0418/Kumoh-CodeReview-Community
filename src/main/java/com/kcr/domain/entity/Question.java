@@ -1,6 +1,10 @@
 package com.kcr.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -40,19 +44,26 @@ public class Question extends BaseTimeEntity {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL, orphanRemoval = true)
+    @Where(clause = "parent_id is null")
+    @JsonIgnore
     private List<QuestionComment> questionComments;
 
     @OneToMany(mappedBy = "question")
+    @Builder.Default
+    @JsonIgnore
     private List<Image> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "question")
+    @Builder.Default
+    @JsonIgnore
     private List<HashTag> hashTags = new ArrayList<>();
 
-    @OneToOne(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "question", fetch = FetchType.LAZY)
     private ChatGPT chatGPT;
     /* 생성자 */
-    public Question(String title, String writer, String content, Long likes, Long views) {
+    public Question(Long id, String title, String writer, String content, Long likes, Long views) {
+        this.id= id;
         this.title = title;
         this.writer = writer;
         this.content = content;

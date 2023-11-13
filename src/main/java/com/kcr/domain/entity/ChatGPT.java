@@ -1,7 +1,7 @@
 package com.kcr.domain.entity;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 
@@ -9,19 +9,32 @@ import javax.persistence.*;
 //Question과 식별관계
 @Entity
 @Getter
+@Setter
 @Table(name = "chatgpt")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ChatGPT {
-    @Id
+    @Id @GeneratedValue
+    @Column(name = "CHATGPT_ID")
     private Long id;
 
-    @Column
-    private String response;
+    @Column(name= "CONTENT")
+    private String gptContent;
+
+    @Column(name = "CREATEDATE")
+    @CreatedDate
+    private String createDate;
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
 
-    // ChatGPT 엔티티의 나머지 부분...
+    public ChatGPT( Long id,String gptContent, Question question) {
+        this.id=id;
+        this.gptContent = gptContent;
+        this.question = question;
+    }
 }
 

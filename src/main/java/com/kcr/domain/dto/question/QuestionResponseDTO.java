@@ -1,6 +1,10 @@
 package com.kcr.domain.dto.question;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.kcr.domain.dto.chatGPT.ChatGptResponse;
 import com.kcr.domain.dto.questioncomment.QuestionCommentResponseDTO;
+import com.kcr.domain.entity.ChatGPT;
 import com.kcr.domain.entity.Question;
 import com.kcr.domain.entity.QuestionComment;
 import lombok.Builder;
@@ -24,6 +28,7 @@ public class QuestionResponseDTO {
     private final Long likes;
     private final Long views;
     private List<QuestionCommentResponseDTO> questionComments;
+    private ChatGptResponse chatGPT;
 //        private final Long memberId;
 
     /* Entity -> DTO */
@@ -48,6 +53,7 @@ public class QuestionResponseDTO {
         this.likes = question.getLikes();
         this.views = question.getViews();
         this.questionComments= question.getQuestionComments().stream().map(QuestionCommentResponseDTO::new).collect(Collectors.toList());
+       // this.chatGPT=question.getChatGPT().;
 //            this.memberId = question.getMember().getId();
     }
 }
