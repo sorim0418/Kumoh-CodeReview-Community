@@ -3,29 +3,33 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/kcr?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
-    password: hoon@0815!!
-
+    password: thfla0901@
   jpa:
     hibernate:
-#      format_sql: true
-      # 개발 초기 단계 또는 로컬에서 테스트: create 또는 update
-      # 테스트 서버: update 또는 validate
-      # 스테이징 및 운영 서버: validate 또는 none
-      ddl-auto: create
+      ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: false
-#    show-sql: true # System.out에 하이버네이트 실행 SQL을 남김
     generate-ddl: true
-
     properties:
       hibernate:
         format_sql: true
+  profiles:
+    include: API-KEY  # 추가된 프로파일 설정
 
 logging.level:
-    org:
-      hibernate:
-        SQL: DEBUG
-        type:
-          descriptor:
-            sql:
-              BasicBinder: TRACE
+  org:
+    hibernate:
+      SQL: DEBUG
+      type:
+        descriptor:
+          sql:
+            BasicBinder: TRACE
+
+# 여기부터 새로 추가하는 설정
+openai:
+  api:
+    token: "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"
+  url:
+    endpoint: https://api.openai.com/v1/completions
+  model: text-davinci-003
+

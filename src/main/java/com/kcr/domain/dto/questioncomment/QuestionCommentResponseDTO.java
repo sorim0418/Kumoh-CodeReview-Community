@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
+//@Builder 삭제된 부분임.
 @NoArgsConstructor
 @Getter
 @Setter
@@ -36,6 +37,7 @@ public class QuestionCommentResponseDTO {
         this.writer=questionComment.getWriter();
         this.question_id=questionComment.getQuestion().getId();
     }
+
     /*public static QuestionCommentResponseDTO toCommentDTO(QuestionComment questionComment, Long questionId) {
         QuestionCommentResponseDTO questionCommentResponseDTO = new QuestionCommentResponseDTO();
         questionCommentResponseDTO.setQuestion_comment_id(questionComment.getId());
@@ -70,6 +72,5 @@ public class QuestionCommentResponseDTO {
                 .childComments(childCommentsDTO)
                 .build();
     }
-
 
 }

@@ -34,7 +34,7 @@ public class ChatGptService {
     @Autowired
     private QuestionRepository questionRepository;
     //yml.에 있는 api key파일
-    @Value("${openai.api-key}")
+    @Value("${openai.api.token}")
     private String apiKey;
 
     //askquestion으로 매핑된 객체에 헤더정보를 포함하는 함수

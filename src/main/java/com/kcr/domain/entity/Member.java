@@ -2,10 +2,8 @@ package com.kcr.domain.entity;
 
 import com.kcr.domain.type.RoleType;
 import lombok.*;
-
 import javax.persistence.*;
 
-import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter

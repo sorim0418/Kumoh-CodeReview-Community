@@ -53,7 +53,7 @@ public class QuestionResponseDTO {
         this.likes = question.getLikes();
         this.views = question.getViews();
         this.questionComments= question.getQuestionComments().stream().map(QuestionCommentResponseDTO::new).collect(Collectors.toList());
-       // this.chatGPT=question.getChatGPT().;
+        // this.chatGPT=question.getChatGPT().;
 //            this.memberId = question.getMember().getId();
     }
 }

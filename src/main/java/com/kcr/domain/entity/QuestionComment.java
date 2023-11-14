@@ -1,17 +1,11 @@
 package com.kcr.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.*;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
@@ -32,26 +26,32 @@ public class QuestionComment {
     private String content;
 
     private Long likes;
+
     /* 연관관계 */
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "PARENT_ID")
     @JsonIgnore
     private QuestionComment parent;
+
     @Builder.Default
     //@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
 /*    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)*/
     @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QuestionComment> child = new ArrayList<>();
+
     public QuestionComment(String content,Long likes, String writer, Question question_id){
         this.content = content;
         this.likes = likes;
         this.writer = writer;
         this.question=question_id;
     }
+
+    // Getters and setters
 
     @Builder
     public QuestionComment( String content, Long likes, Question question, QuestionComment parent) {
@@ -67,4 +67,10 @@ public class QuestionComment {
         this.content = content;
     }
 
+    /*public static QuestionCommentRequestDTO toSaveComment(QuestionComment questionComment, Question question) {
+        QuestionCommentRequestDTO questionCommentDTO = new QuestionCommentRequestDTO();
+        questionCommentDTO.setContent(questionComment.getContent());
+        questionCommentDTO.setWriter(questionComment.getWriter());
+        return questionCommentDTO;
+    }*/
 }

@@ -5,16 +5,12 @@ import com.kcr.domain.dto.question.QuestionListResponseDTO;
 import com.kcr.domain.dto.question.QuestionRequestDTO;
 import com.kcr.domain.dto.question.QuestionResponseDTO;
 import com.kcr.domain.dto.questioncomment.QuestionCommentResponseDTO;
-import com.kcr.domain.entity.ChatGPT;
-import com.kcr.domain.entity.Question;
-import com.kcr.repository.ChatGPTRepository;
 import com.kcr.repository.QuestionRepository;
 import com.kcr.service.ChatGptService;
 import com.kcr.service.QuestionCommentService;
 import com.kcr.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,10 +18,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,30 +33,45 @@ public class QuestionController {
     private final QuestionRepository questionRepository;
     private final QuestionCommentService questionCommentService;
     private final ChatGptService chatGptService;
-    private final ChatGPTRepository chatGPTRepository;
 
-    /* 게시글 등록 화면 */
-//    @GetMapping("/question/add")
-//    public Model addQuestion(Model model) {
-//        return model.addAttribute("questionRequestDTO", new QuestionRequestDTO());
-//    }
+    /* ================ API ================ */
+    /* 게시글 등록 */
+    @PostMapping("/api/question")
+    public Long save(@RequestBody QuestionRequestDTO requestDTO) {
+        return questionService.save(requestDTO);
+    }
 
+    /* 게시글 수정 */
+    @PatchMapping("/api/question/{id}")
+    public Long update(@PathVariable Long id, @RequestBody QuestionRequestDTO requestDTO) {
+        return questionService.update(id, requestDTO);
+    }
+
+    /* 게시글 삭제 */
+    @DeleteMapping("/api/question/{id}")
+    public void delete(@PathVariable Long id) {
+        questionService.delete(id);
+    }
+
+
+
+    /* ================ UI ================ */
     /* 게시글 수정 화면 */
     @GetMapping("/question/{id}/edit")
     public ResponseEntity<QuestionResponseDTO> updateQuestion(@PathVariable("id") Long id) {
-        QuestionResponseDTO questionResponseDTO = questionService.findById(id);
+        QuestionResponseDTO responseDTO = questionService.findById(id);
 
         QuestionResponseDTO.builder()
-                .id(questionResponseDTO.getId())
-                .title(questionResponseDTO.getTitle())
-                .writer(questionResponseDTO.getWriter())
-                .content(questionResponseDTO.getContent())
-                .createDate(questionResponseDTO.getCreateDate())
-                .likes(questionResponseDTO.getLikes())
-                .views(questionResponseDTO.getViews())
+                .id(responseDTO.getId())
+                .title(responseDTO.getTitle())
+                .writer(responseDTO.getWriter())
+                .content(responseDTO.getContent())
+                .createDate(responseDTO.getCreateDate())
+                .likes(responseDTO.getLikes())
+                .views(responseDTO.getViews())
                 .build();
 
-        return new ResponseEntity<>(questionResponseDTO, HttpStatus.OK);
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     /* 게시글 전체 조회 화면 + 최신순 정렬*/
@@ -88,8 +96,8 @@ public class QuestionController {
         String content = questionResponseDTO.getContent();
         log.info("질문: "+content);
         //gpt 댓글
-         ChatGptResponse chatGptResponse = chatGptService.findById(id);
-         questionResponseDTO.setChatGPT(chatGptResponse);
+        ChatGptResponse chatGptResponse = chatGptService.findById(id);
+        questionResponseDTO.setChatGPT(chatGptResponse);
         //댓글
         List<QuestionCommentResponseDTO> questionCommentDTOList = questionCommentService.findAllWithChild(id);
         questionResponseDTO.setQuestionComments(questionCommentDTOList);
@@ -97,10 +105,10 @@ public class QuestionController {
         model.addAttribute("questionCommentList", questionCommentDTOList);
         model.addAttribute("chatGPT", chatGptResponse);
 
-       // model.addAttribute("question", questionResponseDTO);
+        // model.addAttribute("question", questionResponseDTO);
         return new ResponseEntity<>(questionResponseDTO, HttpStatus.OK);
     }
-
-
-
 }
+
+
+

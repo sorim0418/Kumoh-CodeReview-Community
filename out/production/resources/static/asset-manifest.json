@@ -1,17 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.f08d969d.css",
-    "main.js": "/static/js/main.8677513f.js",
-    "static/media/GmarketSansBold.otf": "/static/media/GmarketSansBold.03ceab7804dad3e86672.otf",
-    "static/media/GmarketSansMedium.otf": "/static/media/GmarketSansMedium.3b975ddd58dcbe363ee5.otf",
-    "static/media/GmarketSansLight.otf": "/static/media/GmarketSansLight.5d3bc33796f1cb3705f8.otf",
-    "static/media/kit_LOGO.png": "/static/media/kit_LOGO.6891e3cc8a07190b71f4.png",
+    "main.css": "/static/css/main.b65c88c5.css",
+    "main.js": "/static/js/main.87a52136.js",
     "index.html": "/index.html",
-    "main.f08d969d.css.map": "/static/css/main.f08d969d.css.map",
-    "main.8677513f.js.map": "/static/js/main.8677513f.js.map"
+    "main.b65c88c5.css.map": "/static/css/main.b65c88c5.css.map",
+    "main.87a52136.js.map": "/static/js/main.87a52136.js.map"
   },
   "entrypoints": [
-    "static/css/main.f08d969d.css",
-    "static/js/main.8677513f.js"
+    "static/css/main.b65c88c5.css",
+    "static/js/main.87a52136.js"
   ]
 }
