@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface CodeQuestionRepository extends JpaRepository<CodeQuestion, Long> {
 
     Page<CodeQuestion> findAll(Pageable pageable);
@@ -24,4 +26,6 @@ public interface CodeQuestionRepository extends JpaRepository<CodeQuestion, Long
     @Modifying
     @Query("update CodeQuestion cq set cq.likes = cq.likes + 1 where cq.id=:id")
     void updateLikes(@Param("id")Long id);
+
+    List<CodeQuestion> findAllByMemberId(Long memberId);
 }

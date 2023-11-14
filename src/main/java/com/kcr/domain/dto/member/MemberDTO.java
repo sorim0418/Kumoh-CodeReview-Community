@@ -1,4 +1,4 @@
-package com.kcr.domain.dto;
+package com.kcr.domain.dto.member;
 
 import com.kcr.domain.entity.Member;
 import com.kcr.domain.type.RoleType;

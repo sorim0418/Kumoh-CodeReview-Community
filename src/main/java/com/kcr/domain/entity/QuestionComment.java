@@ -51,15 +51,6 @@ public class QuestionComment {
         this.question=question_id;
     }
 
-    // Getters and setters
-
-    @Builder
-    public QuestionComment( String content, Long likes, Question question, QuestionComment parent) {
-        this.content = content;
-        this.likes = likes;
-        this.question = question;
-        this.parent = parent;
-    }
     public void updateParent(QuestionComment parent) {
         this.parent = parent;
     }
