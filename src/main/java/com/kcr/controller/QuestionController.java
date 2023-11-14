@@ -94,7 +94,7 @@ public class QuestionController {
         QuestionResponseDTO questionResponseDTO = questionService.findById(id);
         questionService.updateViews(id); // views++
         String content = questionResponseDTO.getContent();
-        log.info("질문: "+content);
+        log.info("질문내용: "+content);
         //gpt 댓글
         ChatGptResponse chatGptResponse = chatGptService.findById(id);
         questionResponseDTO.setChatGPT(chatGptResponse);
