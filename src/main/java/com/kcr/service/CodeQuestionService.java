@@ -2,6 +2,7 @@ package com.kcr.service;
 
 import com.kcr.domain.dto.codequestion.CodeQuestionRequestDTO;
 import com.kcr.domain.dto.codequestion.CodeQuestionResponseDTO;
+import com.kcr.domain.dto.codequestioncomment.CodeQuestionCommentRequestDTO;
 import com.kcr.domain.dto.question.CodeQuestionListResponseDTO;
 import com.kcr.domain.entity.CodeQuestion;
 import com.kcr.repository.CodeQuestionRepository;
@@ -90,4 +91,5 @@ public class CodeQuestionService {
     public void updateLikes(@Param("id") Long id) {
         codeQuestionRepository.updateLikes(id);
     }
+
 }

@@ -19,6 +19,7 @@ public class QuestionCommentResponseDTO {
     private Long likes;
     private String writer;
     private Long question_id;
+    private String createDate;
     private List<QuestionCommentResponseDTO> childComments;
     @Builder
     public QuestionCommentResponseDTO(Long question_comment_id, String content, Long likes, String writer,Long question_id,List<QuestionCommentResponseDTO> childComments) {
@@ -35,6 +36,7 @@ public class QuestionCommentResponseDTO {
         this.content=questionComment.getContent();
         this.likes=questionComment.getLikes();
         this.writer=questionComment.getWriter();
+        this.createDate = questionComment.getCreateDate();
         this.question_id=questionComment.getQuestion().getId();
     }
 

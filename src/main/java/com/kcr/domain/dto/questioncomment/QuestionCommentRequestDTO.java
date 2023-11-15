@@ -16,6 +16,7 @@ public class QuestionCommentRequestDTO {
     private Long likes;
     private String writer;
     private Question question;
+    private String createDate;
     private QuestionComment parentComment;
     @Builder
     public QuestionCommentRequestDTO(String content,Long likes, String writer) {
