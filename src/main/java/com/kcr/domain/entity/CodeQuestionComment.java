@@ -40,7 +40,7 @@ public class CodeQuestionComment extends BaseTimeEntity{
     private CodeQuestion codeQuestion;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "parent_id")
+    @JoinColumn(name = "PARENT_ID")
     private CodeQuestionComment parent;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
@@ -59,5 +59,6 @@ public class CodeQuestionComment extends BaseTimeEntity{
     }
 
     public void updateParent(CodeQuestionComment codeQuestionComment) {
+        this.parent=codeQuestionComment;
     }
 }

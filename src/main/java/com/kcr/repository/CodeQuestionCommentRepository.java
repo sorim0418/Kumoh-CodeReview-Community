@@ -18,7 +18,7 @@ public interface CodeQuestionCommentRepository extends JpaRepository<CodeQuestio
 
     @Query(value = "SELECT * FROM codequestioncomment qc WHERE qc.code_question_id = :codeQuestionId LIMIT :limit OFFSET :offset",
             nativeQuery = true)
-    List<CodeQuestionComment> findAllWithRepliesByQuestionId(@Param("codeQuestionId") Long questionId,
+    List<CodeQuestionComment> findAllWithRepliesByQuestionId(@Param("codeQuestionId") Long codeQuestionId,
                                                           @Param("limit") int limit,
                                                           @Param("offset") int offset);
 }

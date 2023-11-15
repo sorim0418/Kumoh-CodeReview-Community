@@ -1,17 +1,18 @@
 package com.kcr.domain.dto.codequestion;
 
-import com.kcr.domain.dto.questioncomment.QuestionCommentResponseDTO;
+import com.kcr.domain.dto.codequestioncomment.CodeQuestionCommentResponseDTO;
 import com.kcr.domain.entity.CodeQuestion;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /* 게시글 정보를 리턴할 응답 클래스 */
 /* Entity 클래스를 생성자 파라미터로 받아 데이터를 DTO로 변환하여 응답 */
 /* 별도의 전달 객체를 활용해 연관관계를 맺은 엔티티 간의 무한 참조 방지 */
 @Getter
+@Setter //
 public class CodeQuestionResponseDTO {
     private final Long id;
     private final String title;
@@ -21,6 +22,7 @@ public class CodeQuestionResponseDTO {
     private final String createDate;
     private final Long likes;
     private final Long views;
+    private  List<CodeQuestionCommentResponseDTO> codeQuestionComment;
 //    List<CodeQuestionCommentResponseDTO> codQuestionComments;
 //        private final Long memberId;
 

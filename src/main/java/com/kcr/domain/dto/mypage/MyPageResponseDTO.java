@@ -31,9 +31,7 @@ public class MyPageResponseDTO {
         this.nickname=nickname;
         this.stuNum=stuNum;
         this.activityScore = activityScore;
-    //    this.questions =question;
-    //    this.codeQuestions =codeQuestion;
-        //    this.boardCnt = question.size()+codeQuestion.size();
+        this.boardCnt = question.size()+codeQuestion.size();
      //   this.commentCnt=question.get(0).getQuestionComments().size()+codeQuestion.get(0).getCodeQuestionComments().size();
     }
     @Builder

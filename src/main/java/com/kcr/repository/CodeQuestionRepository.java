@@ -1,5 +1,6 @@
 package com.kcr.repository;
 
+import com.kcr.domain.dto.codequestioncomment.CodeQuestionCommentResponseDTO;
 import com.kcr.domain.dto.question.CodeQuestionListResponseDTO;
 import com.kcr.domain.entity.CodeQuestion;
 import org.springframework.data.domain.Page;
@@ -29,4 +30,5 @@ public interface CodeQuestionRepository extends JpaRepository<CodeQuestion, Long
     void updateLikes(@Param("id")Long id);
 
     List<CodeQuestion> findAllByMemberId(Long memberId);
+
 }

@@ -19,16 +19,9 @@ import java.util.List;
 public class QuestionCommentController {
     @Autowired
     private QuestionCommentService questionCommentService;
-    @Autowired
-    private QuestionCommentRepository questionCommentRepository;
-    @Autowired
-    private QuestionRepository questionRepository;
 
-    public int write(QuestionCommentRequestDTO questionCommentRequestDTO) {
-        return 0;
-    }
-    //댓글 수정
-    @PutMapping("/questions/{questionId}/comments/{id}")
+    //댓글 수정 , 부분수정이여서 PatchMapping 으로 바꿈
+    @PatchMapping("/question/{questionId}/comments/{id}")
     public ResponseEntity<Long> update(@PathVariable Long questionId,
                                        @PathVariable Long id,
                                        @RequestBody QuestionCommentRequestDTO requestDTO) {
@@ -37,7 +30,7 @@ public class QuestionCommentController {
     }
 
     // 댓글 삭제
-    @DeleteMapping("/questioncomment/{id}/delete")
+    @DeleteMapping("/comment/{id}/delete")
     public void delete(@PathVariable("id") Long id) {
         questionCommentService.delete(id);
     }
@@ -46,8 +39,6 @@ public class QuestionCommentController {
     //댓글등록
     @PostMapping("/question/{id}/comment")
     public ResponseEntity<Long> commentSave(@PathVariable Long id, @RequestBody QuestionCommentRequestDTO questionCommentRequestDTO) {
-        Question question = questionRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("댓글 쓰기 실패: 해당 게시글이 존재하지 않습니다." + id));
         return ResponseEntity.ok(questionCommentService.commentSave(id, questionCommentRequestDTO));
     }
     //대댓글 등록
@@ -58,9 +49,8 @@ public class QuestionCommentController {
         return ResponseEntity.ok(childCommentId);
     }
 
-
     // 대댓글만 조회(테스트용)
-    @GetMapping("/question/{id}/comment/{commentId}/children")
+    @GetMapping("/question/{id}/comment/{commentId}/child")
     public ResponseEntity<List<QuestionCommentResponseDTO>> getChildComments(@PathVariable Long commentId) {
         List<QuestionCommentResponseDTO> childComments = questionCommentService.findAllChildComments(commentId);
         return ResponseEntity.ok(childComments);

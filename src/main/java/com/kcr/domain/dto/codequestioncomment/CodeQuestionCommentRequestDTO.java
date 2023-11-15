@@ -2,7 +2,6 @@ package com.kcr.domain.dto.codequestioncomment;
 
 import com.kcr.domain.entity.CodeQuestion;
 import com.kcr.domain.entity.CodeQuestionComment;
-import com.kcr.domain.entity.QuestionComment;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

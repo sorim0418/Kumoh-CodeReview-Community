@@ -5,12 +5,10 @@ import com.kcr.domain.dto.codequestioncomment.CodeQuestionCommentResponseDTO;
 import com.kcr.domain.dto.questioncomment.QuestionCommentResponseDTO;
 import com.kcr.domain.entity.CodeQuestion;
 import com.kcr.domain.entity.CodeQuestionComment;
-import com.kcr.domain.entity.Question;
 import com.kcr.domain.entity.QuestionComment;
 import com.kcr.repository.CodeQuestionCommentRepository;
 import com.kcr.repository.CodeQuestionRepository;
-import com.kcr.repository.QuestionCommentRepository;
-import com.kcr.repository.QuestionRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +18,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CodeQuestionCommentService implements CommentService{
+
     @Autowired
     private CodeQuestionCommentRepository codeQuestionCommentRepository;
     @Autowired
@@ -48,6 +48,16 @@ public class CodeQuestionCommentService implements CommentService{
     //댓글 등록
     @Transactional
     public Long commentSave(Long id, CodeQuestionCommentRequestDTO codeQuestionCommentRequestDTO) {
+        String content = codeQuestionCommentRequestDTO.getContent();
+        String codeContent = codeQuestionCommentRequestDTO.getCodeContent();
+        if (content == null || content.trim().isEmpty()) {
+            System.out.println("댓글 내용 없음");
+            throw new IllegalArgumentException("댓글 내용이 비어있습니다.");
+        }
+        else if(codeContent == null || codeContent.trim().isEmpty()){
+            System.out.println("코드 박스 내용 없음");
+            throw new IllegalArgumentException("코드 박스 내용이 비어있습니다.");
+        }
         CodeQuestion codeQuestion = codeQuestionRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("댓글 쓰기 실패: 해당 게시글이 존재하지 않습니다." + id));
 
@@ -61,6 +71,11 @@ public class CodeQuestionCommentService implements CommentService{
 
     //대댓글 등록
     public Long saveChildComment(Long parentId, Long codeQuestionID, CodeQuestionCommentRequestDTO requestDTO) {
+
+        String content = requestDTO.getContent();
+        if (content == null || content.trim().isEmpty()) {
+            throw new IllegalArgumentException("대댓글 내용이 비어있습니다.");
+        }
         CodeQuestionComment parent = codeQuestionCommentRepository.findById(parentId)
                 .orElseThrow(() -> new IllegalArgumentException("부모 댓글이 존재하지 않습니다: " + parentId));
         CodeQuestion codeQuestion = codeQuestionRepository.findById(codeQuestionID)
@@ -80,5 +95,30 @@ public class CodeQuestionCommentService implements CommentService{
         return codeQuestionCommentRepository.findChildCommentsByParentId(commentId).stream()
                 .map(CodeQuestionCommentResponseDTO::new)
                 .collect(Collectors.toList());
+    }
+    //게시글의 코드를 불러옴
+    public String codeQuestionContent(Long codeQuesetionID){
+        String codeQUestionContent = "";
+        CodeQuestion codeQuestion = codeQuestionRepository.findById(codeQuesetionID).orElseThrow(() ->
+                new IllegalArgumentException("댓글 쓰기 실패: 해당 게시글이 존재하지 않습니다." + codeQuesetionID));
+
+        codeQUestionContent = codeQuestion.getCodeContent();
+        return codeQUestionContent;
+    }
+
+    public List<CodeQuestionCommentResponseDTO> findAllWithChild2(Long codeQuestionId, int page) {
+        int size = 5; // 페이지당 댓글 수
+        int limit = size;
+        int offset = page * size;
+
+        List<CodeQuestionComment> comments = codeQuestionCommentRepository.findAllWithRepliesByQuestionId(codeQuestionId, limit, offset);
+
+        List<CodeQuestionCommentResponseDTO> codeQuestionCommentResponseDTOList = new ArrayList<>();
+        for (CodeQuestionComment codeQuestionComment : comments) {
+            CodeQuestionCommentResponseDTO dto = CodeQuestionCommentResponseDTO.toCommentDTO(codeQuestionComment);
+            codeQuestionCommentResponseDTOList.add(dto);
+        }
+
+        return codeQuestionCommentResponseDTOList;
     }
 }

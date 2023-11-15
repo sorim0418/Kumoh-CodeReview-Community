@@ -91,21 +91,6 @@ public class QuestionCommentService implements CommentService {
                 .map(QuestionCommentResponseDTO::new)
                 .collect(Collectors.toList());
     }
-    public List<QuestionCommentResponseDTO> findAllWithChild(Long questionId) {
-        List<QuestionComment> questionCommentList = questionCommentRepository.findAllWithRepliesByQuestionId(questionId);
-        List<QuestionCommentResponseDTO> questionCommentDTOList = new ArrayList<>();
-
-        for (QuestionComment questionComment : questionCommentList) {
-            QuestionCommentResponseDTO dto = QuestionCommentResponseDTO.toCommentDTO2(questionComment);
-            if (!questionCommentDTOList.contains(dto)) {
-                questionCommentDTOList.add(dto);
-            }
-        }
-
-        return questionCommentDTOList;
-    }
-
-
     public List<QuestionCommentResponseDTO> findAllWithChild2(Long questionId, int page) {
         int size = 5; // 페이지당 댓글 수
         int limit = size;

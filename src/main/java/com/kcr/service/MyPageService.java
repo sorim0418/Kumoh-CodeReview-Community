@@ -19,7 +19,25 @@ public class MyPageService {
     private final MemberRepository memberRepository;
     private final QuestionRepository questionRepository;
     private final CodeQuestionRepository codeQuestionRepository;
+    //내프로필 화면
         public MyPageResponseDTO findbyId(Long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(IllegalArgumentException::new);
+        List<Question> question = questionRepository.findAllByMemberId(id);
+        List<CodeQuestion> codeQuestions = codeQuestionRepository.findAllByMemberId(id);
+
+        return  MyPageResponseDTO.builder()
+                .loginId(member.getLoginId())
+                .nickname(member.getNickname())
+                .stuNum(member.getStuNum())
+                .activityScore(member.getActivityScore())
+                .question(question)
+                .codeQuestion(codeQuestions)
+                .build();
+    }
+
+    //내가 쓴 게시글 보기
+    public MyPageResponseDTO findAllPostbyId(Long id) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(IllegalArgumentException::new);
         List<Question> question = questionRepository.findAllByMemberId(id);
