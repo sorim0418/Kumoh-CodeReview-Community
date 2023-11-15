@@ -5,11 +5,11 @@ import lombok.*;
 import org.hibernate.Hibernate;
 import org.springframework.http.HttpStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-//@Builder 삭제된 부분임.
 @NoArgsConstructor
 @Getter
 @Setter
@@ -38,31 +38,21 @@ public class QuestionCommentResponseDTO {
         this.question_id=questionComment.getQuestion().getId();
     }
 
-    /*public static QuestionCommentResponseDTO toCommentDTO(QuestionComment questionComment, Long questionId) {
-        QuestionCommentResponseDTO questionCommentResponseDTO = new QuestionCommentResponseDTO();
-        questionCommentResponseDTO.setQuestion_comment_id(questionComment.getId());
-        questionCommentResponseDTO.setContent(questionComment.getContent());
-        questionCommentResponseDTO.setLikes(questionComment.getLikes());
-        questionCommentResponseDTO.setWriter(questionComment.getWriter());
-        questionCommentResponseDTO.setQuestion_id(questionId);
-        // 대댓글 목록을 DTO로 변환
-        if (questionComment.getChild() != null) {
-            List<QuestionCommentResponseDTO> commentsDTO = questionComment.getChild().stream()
-                    .map(childComments -> toCommentDTO(childComments))
-                    .collect(Collectors.toList());
-            questionCommentResponseDTO.setChildComments(commentsDTO);
-        }
-        return questionCommentResponseDTO;
-    }*/
-
     public static QuestionCommentResponseDTO toCommentDTO2(QuestionComment questionComment) {
-        List<QuestionCommentResponseDTO> childCommentsDTO = null;
+        // 자식 댓글 리스트 초기화
+        List<QuestionCommentResponseDTO> childCommentsDTO = new ArrayList<>();
+
+        // 자식 댓글 처리
         if (questionComment.getChild() != null) {
-            childCommentsDTO = questionComment.getChild().stream()
-                    .map(childComment -> toCommentDTO2(childComment))
-                    .collect(Collectors.toList());
+            for (QuestionComment childComment : questionComment.getChild()) {
+                // 부모 댓글의 ID와 다른 경우에만 자식 댓글 목록에 추가
+                if (!childComment.getParent().getId().equals(questionComment.getId())) {
+                    childCommentsDTO.add(toCommentDTO2(childComment));
+                }
+            }
         }
 
+        // DTO 생성
         return QuestionCommentResponseDTO.builder()
                 .question_comment_id(questionComment.getId())
                 .content(questionComment.getContent())
@@ -72,5 +62,4 @@ public class QuestionCommentResponseDTO {
                 .childComments(childCommentsDTO)
                 .build();
     }
-
 }

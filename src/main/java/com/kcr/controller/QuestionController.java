@@ -99,8 +99,17 @@ public class QuestionController {
         ChatGptResponse chatGptResponse = chatGptService.findById(id);
         questionResponseDTO.setChatGPT(chatGptResponse);
         //댓글
-        List<QuestionCommentResponseDTO> questionCommentDTOList = questionCommentService.findAllWithChild(id);
+      //  List<QuestionCommentResponseDTO> questionCommentDTOList = questionCommentService.findAllWithChild(id);
+       // questionResponseDTO.setQuestionComments(questionCommentDTOList);
+
+        //댓글 페이징 처리
+        List<QuestionCommentResponseDTO> questionCommentDTOList = questionCommentService.findAllWithChild2(id, 1);
         questionResponseDTO.setQuestionComments(questionCommentDTOList);
+
+        System.out.println("댓글 사이즈 : "+ questionCommentDTOList.size());
+        for(int i = 0;i<questionCommentDTOList.size();i++){
+            System.out.println("questionList : "+questionCommentDTOList.get(i).getQuestion_id());
+        }
 
         model.addAttribute("questionCommentList", questionCommentDTOList);
         model.addAttribute("chatGPT", chatGptResponse);

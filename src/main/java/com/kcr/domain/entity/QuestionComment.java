@@ -15,7 +15,7 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 기본 생성자의 접근 제어를 Protected로 설정함으로써 무분별한 객체 생성을 예방함
 @AllArgsConstructor
 @Builder
-public class QuestionComment {
+public class QuestionComment extends BaseTimeEntity{
     @Id @GeneratedValue
     @Column(name = "QUESTION_COMMENT_ID")
     private Long id;

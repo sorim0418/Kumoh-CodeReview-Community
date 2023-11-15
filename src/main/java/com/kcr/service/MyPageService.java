@@ -31,6 +31,7 @@ public class MyPageService {
                 .stuNum(member.getStuNum())
                 .activityScore(member.getActivityScore())
                 .question(question)
+                .codeQuestion(codeQuestions)
                 .build();
     }
 }

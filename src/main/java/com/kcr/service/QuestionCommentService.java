@@ -8,6 +8,9 @@ import com.kcr.repository.QuestionCommentRepository;
 import com.kcr.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -93,8 +96,27 @@ public class QuestionCommentService implements CommentService {
         List<QuestionCommentResponseDTO> questionCommentDTOList = new ArrayList<>();
 
         for (QuestionComment questionComment : questionCommentList) {
-            QuestionCommentResponseDTO questionCommentDTO = QuestionCommentResponseDTO.toCommentDTO2(questionComment);
-            questionCommentDTOList.add(questionCommentDTO);
+            QuestionCommentResponseDTO dto = QuestionCommentResponseDTO.toCommentDTO2(questionComment);
+            if (!questionCommentDTOList.contains(dto)) {
+                questionCommentDTOList.add(dto);
+            }
+        }
+
+        return questionCommentDTOList;
+    }
+
+
+    public List<QuestionCommentResponseDTO> findAllWithChild2(Long questionId, int page) {
+        int size = 5; // 페이지당 댓글 수
+        int limit = size;
+        int offset = page * size;
+
+        List<QuestionComment> comments = questionCommentRepository.findAllWithRepliesByQuestionId2(questionId, limit, offset);
+
+        List<QuestionCommentResponseDTO> questionCommentDTOList = new ArrayList<>();
+        for (QuestionComment questionComment : comments) {
+            QuestionCommentResponseDTO dto = QuestionCommentResponseDTO.toCommentDTO2(questionComment);
+            questionCommentDTOList.add(dto);
         }
 
         return questionCommentDTOList;

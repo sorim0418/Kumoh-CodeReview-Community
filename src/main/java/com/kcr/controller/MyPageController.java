@@ -4,18 +4,21 @@ import com.kcr.domain.dto.mypage.MyPageResponseDTO;
 import com.kcr.domain.dto.question.QuestionResponseDTO;
 import com.kcr.domain.entity.Member;
 import com.kcr.service.MyPageService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
+@RequiredArgsConstructor
 public class MyPageController {
 
-    private MyPageService myPageService;
+    private final MyPageService myPageService;
     //내프로필 전체
     @GetMapping("/mypage/member/{id}")
-    public ResponseEntity<Member> showMyPage(@PathVariable("id") Long id) {
+    public ResponseEntity<MyPageResponseDTO> showMyPage(@PathVariable("id") Long id) {
         MyPageResponseDTO myPageResponseDTO = myPageService.findbyId(id);
 
         MyPageResponseDTO.builder()
@@ -23,10 +26,10 @@ public class MyPageController {
                 .nickname(myPageResponseDTO.getNickname())
                 .stuNum(myPageResponseDTO.getStuNum())
                 .activityScore(myPageResponseDTO.getActivityScore())
-                .question(myPageResponseDTO.getQuestion())
+                .question(myPageResponseDTO.getQuestions())
                 .codeQuestion(myPageResponseDTO.getCodeQuestions())
                 .build();
-        return null;
+        return new ResponseEntity<>(myPageResponseDTO, HttpStatus.OK);
     }
 
     //내 Q&A게시글 조회
