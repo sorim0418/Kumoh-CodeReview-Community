@@ -39,6 +39,8 @@ public class QuestionCommentController {
     //댓글등록
     @PostMapping("/question/{id}/comment")
     public ResponseEntity<Long> commentSave(@PathVariable Long id, @RequestBody QuestionCommentRequestDTO questionCommentRequestDTO) {
+        Long commentID = questionCommentService.commentSave(id, questionCommentRequestDTO);
+        System.out.println("questionCommentID :"+commentID);
         return ResponseEntity.ok(questionCommentService.commentSave(id, questionCommentRequestDTO));
     }
     //대댓글 등록

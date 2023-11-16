@@ -28,7 +28,7 @@ logging.level:
 # 여기부터 새로 추가하는 설정
 openai:
   api:
-    token: "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"
+    token: "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"
   url:
     endpoint: https://api.openai.com/v1/completions
   model: text-davinci-003

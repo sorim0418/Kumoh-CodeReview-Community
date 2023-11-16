@@ -36,19 +36,19 @@ public class QuestionController {
 
     /* ================ API ================ */
     /* 게시글 등록 */
-    @PostMapping("/api/question")
+    @PostMapping("/question")
     public Long save(@RequestBody QuestionRequestDTO requestDTO) {
         return questionService.save(requestDTO);
     }
 
     /* 게시글 수정 */
-    @PatchMapping("/api/question/{id}")
+    @PatchMapping("/question/{id}")
     public Long update(@PathVariable Long id, @RequestBody QuestionRequestDTO requestDTO) {
         return questionService.update(id, requestDTO);
     }
 
     /* 게시글 삭제 */
-    @DeleteMapping("/api/question/{id}")
+    @DeleteMapping("/question/{id}")
     public void delete(@PathVariable Long id) {
         questionService.delete(id);
     }

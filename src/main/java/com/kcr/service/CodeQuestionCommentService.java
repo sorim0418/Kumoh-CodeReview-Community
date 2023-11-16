@@ -66,6 +66,7 @@ public class CodeQuestionCommentService implements CommentService{
         codeQuestionComment.updateParent(codeQuestionComment);
         codeQuestionCommentRepository.save(codeQuestionComment);
 
+        System.out.println("commentsave함수에서 처리한것 "+codeQuestionCommentRequestDTO.getId());
         return codeQuestionCommentRequestDTO.getId();
     }
 
@@ -91,12 +92,14 @@ public class CodeQuestionCommentService implements CommentService{
     }
 
     //댓글 조회(대댓글과 같이)
+    @Transactional
     public List<CodeQuestionCommentResponseDTO> findAllChildComments(Long commentId) {
         return codeQuestionCommentRepository.findChildCommentsByParentId(commentId).stream()
                 .map(CodeQuestionCommentResponseDTO::new)
                 .collect(Collectors.toList());
     }
     //게시글의 코드를 불러옴
+    @Transactional
     public String codeQuestionContent(Long codeQuesetionID){
         String codeQUestionContent = "";
         CodeQuestion codeQuestion = codeQuestionRepository.findById(codeQuesetionID).orElseThrow(() ->
@@ -105,20 +108,23 @@ public class CodeQuestionCommentService implements CommentService{
         codeQUestionContent = codeQuestion.getCodeContent();
         return codeQUestionContent;
     }
-
+    @Transactional
     public List<CodeQuestionCommentResponseDTO> findAllWithChild2(Long codeQuestionId, int page) {
         int size = 5; // 페이지당 댓글 수
         int limit = size;
         int offset = page * size;
-
-        List<CodeQuestionComment> comments = codeQuestionCommentRepository.findAllWithRepliesByQuestionId(codeQuestionId, limit, offset);
+        System.out.println("codequestionID :"+ codeQuestionId);
+        List<CodeQuestionComment> comments = codeQuestionCommentRepository.findAllWithRepliesByCodeQuestionId(codeQuestionId, limit, offset);
 
         List<CodeQuestionCommentResponseDTO> codeQuestionCommentResponseDTOList = new ArrayList<>();
         for (CodeQuestionComment codeQuestionComment : comments) {
             CodeQuestionCommentResponseDTO dto = CodeQuestionCommentResponseDTO.toCommentDTO(codeQuestionComment);
             codeQuestionCommentResponseDTOList.add(dto);
         }
-
+        System.out.println("comments size :"+comments.size());
+        for(int i = 0;i<comments.size();i++){
+            System.out.println("comments  :"+comments.get(i).getCodeContent());
+        }
         return codeQuestionCommentResponseDTOList;
     }
 }

@@ -37,11 +37,17 @@ public class CodeQuestionCommentController {
     //댓글등록(일반 댓글과 코드 관련댓글 공백일시 예외처리)
     @PostMapping("/codequestion/{id}/codecomment")
     public ResponseEntity<String> commentSave(@PathVariable Long id, @RequestBody CodeQuestionCommentRequestDTO codeQuestionCommentRequestDTO) {
+
+        System.out.println("====================start====================================");
         try {
             Long commentId = codeQuestionCommentService.commentSave(id, codeQuestionCommentRequestDTO);
+            System.out.println("commentI :"+commentId);
             String commentIDtoString = String.valueOf(commentId);
+
+            System.out.println("commentIDtoString :"+commentIDtoString);
             return ResponseEntity.ok().body(commentIDtoString);
         } catch (IllegalArgumentException e) {
+            System.out.println("error :");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

@@ -33,19 +33,19 @@ public class CodeQuestionController {
 
     /* ================ API ================ */
     /* 게시글 등록 */
-    @PostMapping("/api/codequestion")
+    @PostMapping("/codequestion")
     public Long save(@RequestBody CodeQuestionRequestDTO requestDTO) {
         return codeQuestionService.save(requestDTO);
     }
 
     /* 게시글 수정 */
-    @PatchMapping("/api/codequestion/{id}")
+    @PatchMapping("/codequestion/{id}")
     public Long update(@PathVariable Long id, @RequestBody CodeQuestionRequestDTO requestDTO) {
         return codeQuestionService.update(id, requestDTO);
     }
 
     /* 게시글 삭제 */
-    @DeleteMapping("/api/codequestion/{id}")
+    @DeleteMapping("/codequestion/{id}")
     public void delete(@PathVariable Long id) {
         codeQuestionService.delete(id);
     }
@@ -75,7 +75,6 @@ public class CodeQuestionController {
                 .likes(responseDTO.getLikes())
                 .views(responseDTO.getViews())
                 .build();
-
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
