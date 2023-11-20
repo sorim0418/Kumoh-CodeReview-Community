@@ -112,7 +112,7 @@ public class CodeQuestionCommentService implements CommentService{
     public List<CodeQuestionCommentResponseDTO> findAllWithChild2(Long codeQuestionId, int page) {
         int size = 5; // 페이지당 댓글 수
         int limit = size;
-        int offset = page * size;
+        int offset = (page - 1) * size;
         System.out.println("codequestionID :"+ codeQuestionId);
         List<CodeQuestionComment> comments = codeQuestionCommentRepository.findAllWithRepliesByCodeQuestionId(codeQuestionId, limit, offset);
 
