@@ -5,6 +5,7 @@ import com.kcr.domain.dto.questioncomment.QuestionCommentResponseDTO;
 import com.kcr.domain.entity.Question;
 import com.kcr.repository.QuestionCommentRepository;
 import com.kcr.repository.QuestionRepository;
+import com.kcr.service.PushService;
 import com.kcr.service.QuestionCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import java.util.List;
 public class QuestionCommentController {
     @Autowired
     private QuestionCommentService questionCommentService;
+    @Autowired
+    private PushService pushService;
 
     //댓글 수정 , 부분수정이여서 PatchMapping 으로 바꿈
     @PatchMapping("/question/{questionId}/comments/{id}")
@@ -40,6 +43,8 @@ public class QuestionCommentController {
     @PostMapping("/question/{id}/comment")
     public ResponseEntity<Long> commentSave(@PathVariable Long id, @RequestBody QuestionCommentRequestDTO questionCommentRequestDTO) {
         Long commentID = questionCommentService.commentSave(id, questionCommentRequestDTO);
+        //댓글알림
+       // pushService.notifyLikesByComment(id);
         System.out.println("questionCommentID :"+commentID);
         return ResponseEntity.ok(questionCommentService.commentSave(id, questionCommentRequestDTO));
     }
@@ -48,6 +53,8 @@ public class QuestionCommentController {
     public ResponseEntity<Long> createChildComment(@PathVariable Long parentId,@PathVariable Long id,
                                                    @RequestBody QuestionCommentRequestDTO requestDTO) {
         Long childCommentId = questionCommentService.saveChildComment(parentId, id,requestDTO);
+        //대댓글알림
+        //pushService.notifyByRecomment(id);
         return ResponseEntity.ok(childCommentId);
     }
 
