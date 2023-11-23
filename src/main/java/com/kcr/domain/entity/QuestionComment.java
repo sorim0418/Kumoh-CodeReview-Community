@@ -25,7 +25,8 @@ public class QuestionComment extends BaseTimeEntity{
     @Column(columnDefinition = "LONGTEXT")
     private String content;
 
-    private Long likes;
+    @Column(columnDefinition = "integer default 0")
+    private Long totalLikes = 0L;
 
     /* 연관관계 */
     @ManyToOne(fetch = LAZY)
@@ -44,9 +45,9 @@ public class QuestionComment extends BaseTimeEntity{
     @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QuestionComment> child = new ArrayList<>();
 
-    public QuestionComment(String content,Long likes, String writer, Question question_id){
+    public QuestionComment(String content,Long totalLikes, String writer, Question question_id){
         this.content = content;
-        this.likes = likes;
+        this.totalLikes = totalLikes;
         this.writer = writer;
         this.question=question_id;
     }
